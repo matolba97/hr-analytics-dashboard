@@ -1,0 +1,135 @@
+/// Fact: one employee-payroll-month transaction, identified by Payroll ID with verified Employee/month uniqueness. Employee Key relates to Dim_Employee; Payroll Period month start actively relates to Dim_Date, with Payment Date inactive for explicit cash-date measures. Currency and historical FX policy are unspecified.
+table Fact_Payroll
+	lineageTag: 5c9a7b3d-8605-47b1-8438-64146c3610a5
+
+	/// Payroll ID, sourced or reproducibly derived from the HR extract.
+	column 'Payroll ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: cdaee1e8-909e-491c-ab14-3b9343e06938
+		summarizeBy: none
+		sourceColumn: Payroll ID
+
+	/// Employee ID, sourced or reproducibly derived from the HR extract.
+	column 'Employee ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: e16f3cda-7269-4964-9c7d-82bbd94abe6d
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+	/// Payroll Month, sourced or reproducibly derived from the HR extract.
+	column 'Payroll Month'
+		dataType: string
+		lineageTag: e0b4480d-ec22-4f0d-bc18-96fc8f0ec90b
+		summarizeBy: none
+		sourceColumn: Payroll Month
+
+	/// Basic Salary, sourced or reproducibly derived from the HR extract.
+	column 'Basic Salary'
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: b6aed43b-259a-487f-b351-228540ce58eb
+		summarizeBy: none
+		sourceColumn: Basic Salary
+
+	/// Allowances, sourced or reproducibly derived from the HR extract.
+	column Allowances
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 5d3864a7-28af-41cf-a7d8-0222ed50a458
+		summarizeBy: none
+		sourceColumn: Allowances
+
+	/// Bonus, sourced or reproducibly derived from the HR extract.
+	column Bonus
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: d7f8e0dd-93e7-4a4a-b79b-e69587b84611
+		summarizeBy: none
+		sourceColumn: Bonus
+
+	/// Tax, sourced or reproducibly derived from the HR extract.
+	column Tax
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: a7c8c3a2-6097-40c8-92f7-8cdeda8c4e67
+		summarizeBy: none
+		sourceColumn: Tax
+
+	/// Deductions, sourced or reproducibly derived from the HR extract.
+	column Deductions
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 5df1ac9b-1ad4-4567-9f0f-e526136a3130
+		summarizeBy: none
+		sourceColumn: Deductions
+
+	/// Net Salary, sourced or reproducibly derived from the HR extract.
+	column 'Net Salary'
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 57a757dd-a9fa-4ec1-8251-69a4fc1f5abe
+		summarizeBy: none
+		sourceColumn: Net Salary
+
+	/// Payment Date, sourced or reproducibly derived from the HR extract.
+	column 'Payment Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 52fe5811-8671-4cb2-95a7-07796d0d2968
+		summarizeBy: none
+		sourceColumn: Payment Date
+
+	/// Employee Key, sourced or reproducibly derived from the HR extract.
+	column 'Employee Key'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 369a5c17-85e5-4588-8d77-2fab9ba2c97a
+		summarizeBy: none
+		sourceColumn: Employee Key
+
+	/// Payroll Period, sourced or reproducibly derived from the HR extract.
+	column 'Payroll Period'
+		dataType: dateTime
+		formatString: MMM yyyy
+		lineageTag: 4dc2fbd6-4ba9-4316-a608-ea3e0ce5c74f
+		summarizeBy: none
+		sourceColumn: Payroll Period
+
+	/// Gross Salary, sourced or reproducibly derived from the HR extract.
+	column 'Gross Salary'
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: a9327d1e-046e-4f81-8aac-fef6be9cf94c
+		summarizeBy: none
+		sourceColumn: Gross Salary
+
+	partition Payroll = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Source=Read("Payroll"),
+				    Typed=Table.TransformColumnTypes(Source,{{"Payroll_ID",type text},{"Employee_ID",type text},{"Payroll_Month",type text},{"Basic_Salary",Currency.Type},{"Allowances",Currency.Type},{"Bonus",Currency.Type},{"Tax",Currency.Type},{"Deductions",Currency.Type},{"Net_Salary",Currency.Type},{"Payment_Date",type date}},"en-US"),
+				    Key=Table.AddColumn(Typed,"Employee Key",each Number.FromText(Text.Select([Employee_ID],{"0".."9"})),Int64.Type),
+				    Period=Table.AddColumn(Key,"Payroll Period",each Date.FromText([Payroll_Month] & "-01"),type date),
+				    Gross=Table.AddColumn(Period,"Gross Salary",each [Basic_Salary]+[Allowances]+[Bonus],Currency.Type),
+				    Renamed=Table.RenameColumns(Gross,{{"Payroll_ID","Payroll ID"},{"Employee_ID","Employee ID"},{"Payroll_Month","Payroll Month"},{"Basic_Salary","Basic Salary"},{"Net_Salary","Net Salary"},{"Payment_Date","Payment Date"}}),
+				    Result=Table.SelectColumns(Renamed,{"Payroll ID","Employee ID","Payroll Month","Basic Salary","Allowances","Bonus","Tax","Deductions","Net Salary","Payment Date","Employee Key" ,"Payroll Period","Gross Salary"})
+				in Result
+

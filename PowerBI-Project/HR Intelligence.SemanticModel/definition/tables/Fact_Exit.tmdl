@@ -1,0 +1,85 @@
+/// Fact: one employee exit event in the supplied extract, identified by Exit ID with verified Employee uniqueness. Employee Key relates to Dim_Employee and Exit Date actively relates to Dim_Date. Exit Date is an exclusive lifecycle boundary. Voluntary/involuntary measures are subsets and do not exhaust all exit types.
+table Fact_Exit
+	lineageTag: 4b2fcc97-87eb-4ba5-9039-5048c9b74975
+
+	/// Exit ID, sourced or reproducibly derived from the HR extract.
+	column 'Exit ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: aa0cd6b0-d783-4898-a711-56cc0126799d
+		summarizeBy: none
+		sourceColumn: Exit ID
+
+	/// Employee ID, sourced or reproducibly derived from the HR extract.
+	column 'Employee ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 939e1c75-efa6-44e1-9a36-6de78ca84819
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+	/// Exit Date, sourced or reproducibly derived from the HR extract.
+	column 'Exit Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: a6b844f0-f006-44b8-ae5f-75ab2b7ae433
+		summarizeBy: none
+		sourceColumn: Exit Date
+
+	/// Exit Reason, sourced or reproducibly derived from the HR extract.
+	column 'Exit Reason'
+		dataType: string
+		lineageTag: 491801ca-d206-44b9-9f67-f91799dddef7
+		summarizeBy: none
+		sourceColumn: Exit Reason
+
+	/// Exit Type, sourced or reproducibly derived from the HR extract.
+	column 'Exit Type'
+		dataType: string
+		lineageTag: 9ff095e5-a14f-4342-bcd3-62768f318a5f
+		summarizeBy: none
+		sourceColumn: Exit Type
+
+	/// Notice Period, sourced or reproducibly derived from the HR extract.
+	column 'Notice Period'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 0b513200-23b8-445c-813f-e519fa30636c
+		summarizeBy: none
+		sourceColumn: Notice Period
+
+	/// Final Rating, sourced or reproducibly derived from the HR extract.
+	column 'Final Rating'
+		dataType: string
+		lineageTag: 93d81174-94be-4a63-9330-6ea64de7a7b9
+		summarizeBy: none
+		sourceColumn: Final Rating
+
+	/// Employee Key, sourced or reproducibly derived from the HR extract.
+	column 'Employee Key'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 4e5b05a9-d4c3-4c1b-9f0f-acafcc86ad57
+		summarizeBy: none
+		sourceColumn: Employee Key
+
+	partition Exit = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Source=Read("Exit"),
+				    Typed=Table.TransformColumnTypes(Source,{{"Exit_ID",type text},{"Employee_ID",type text},{"Exit_Date",type date},{"Exit_Reason",type text},{"Exit_Type",type text},{"Notice_Period",Int64.Type},{"Final_Rating",type text}},"en-US"),
+				    Key=Table.AddColumn(Typed,"Employee Key",each Number.FromText(Text.Select([Employee_ID],{"0".."9"})),Int64.Type),
+				    Renamed=Table.RenameColumns(Key,{{"Exit_ID","Exit ID"},{"Employee_ID","Employee ID"},{"Exit_Date","Exit Date"},{"Exit_Reason","Exit Reason"},{"Exit_Type","Exit Type"},{"Notice_Period","Notice Period"},{"Final_Rating","Final Rating"}}),
+				    Result=Table.SelectColumns(Renamed,{"Exit ID","Employee ID","Exit Date","Exit Reason","Exit Type","Notice Period","Final Rating","Employee Key"})
+				in Result
+

@@ -1,0 +1,8 @@
+/// Folder containing unchanged HR source CSVs.
+expression DatasetRoot = "D:\Dashboard\HR-Enterprise-Analytics\Source-Data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 256c74bb-14e8-481e-b856-31a5ec8f2a2c
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Text
+

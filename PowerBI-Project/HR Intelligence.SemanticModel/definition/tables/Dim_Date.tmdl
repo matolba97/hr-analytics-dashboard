@@ -1,0 +1,109 @@
+/// Dimension: one row per contiguous calendar date, identified by Date, covering full source years. Shared active roles: attendance, payroll-period month start, leave start, review, application, training start and exit. Five preserved inactive payment/interview/joining/end-date relationships support explicitly named role measures. Calendar hierarchy and chronological sort columns are retained.
+table Dim_Date
+	lineageTag: 68240727-6eb1-4305-afd8-289c820ae6a1
+	dataCategory: Time
+
+	/// Date, sourced or reproducibly derived from the HR extract.
+	column Date
+		dataType: dateTime
+		isUnique
+		formatString: dd MMM yyyy
+		lineageTag: fa6c3651-bdae-4373-837b-53133b3434d2
+		summarizeBy: none
+		sourceColumn: Date
+
+	/// Year, sourced or reproducibly derived from the HR extract.
+	column Year
+		dataType: int64
+		lineageTag: 2754d71a-d1fa-4050-b23a-ef9bb938e064
+		summarizeBy: none
+		sourceColumn: Year
+
+	/// Quarter, sourced or reproducibly derived from the HR extract.
+	column Quarter
+		dataType: string
+		lineageTag: 55bf4ca1-9904-4fa3-9e76-974140d562e4
+		summarizeBy: none
+		sourceColumn: Quarter
+
+	/// Month Number, sourced or reproducibly derived from the HR extract.
+	column 'Month Number'
+		dataType: int64
+		isHidden
+		lineageTag: a1616f49-2d87-452b-98ee-1174c74fa1c9
+		summarizeBy: none
+		sourceColumn: Month Number
+
+	/// Month, sourced or reproducibly derived from the HR extract.
+	column Month
+		dataType: string
+		lineageTag: 642a008c-3e49-4a85-8624-b0d3d97ed132
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: 'Month Number'
+
+	/// Year Month, sourced or reproducibly derived from the HR extract.
+	column 'Year Month'
+		dataType: string
+		lineageTag: 5a7120e9-562a-45d7-b928-84dd2c2cc830
+		summarizeBy: none
+		sourceColumn: Year Month
+		sortByColumn: 'Year Month Sort'
+
+	/// Year Month Sort, sourced or reproducibly derived from the HR extract.
+	column 'Year Month Sort'
+		dataType: int64
+		isHidden
+		lineageTag: f231e064-a4ae-4adc-9b7e-e151bbd64b81
+		summarizeBy: none
+		sourceColumn: Year Month Sort
+
+	/// Day, sourced or reproducibly derived from the HR extract.
+	column Day
+		dataType: int64
+		lineageTag: 052bb3b6-545c-4160-9569-3e50f0afcc85
+		summarizeBy: none
+		sourceColumn: Day
+
+	/// Year, quarter, month and date calendar drill path.
+	hierarchy Calendar
+		lineageTag: 6d4e8f85-83e8-4791-93fd-c35e4f5812ab
+
+		level Year
+			lineageTag: b06ceb6f-e95f-4efb-afed-7a6b45a052a9
+			column: Year
+
+		level Quarter
+			lineageTag: 19d241bb-f9b9-4e6f-8b19-0b3bbf394169
+			column: Quarter
+
+		level Month
+			lineageTag: 33755638-862a-4914-bb58-c74106d34c3c
+			column: Month
+
+		level Day
+			lineageTag: 91d852e9-5a4b-4c78-8bf3-5d276e266322
+			column: Date
+
+	partition Date = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Start=Date.StartOfYear(List.Min(List.Transform(Read("Employees")[Hire_Date],each Date.FromText(_)))),
+				    End=Date.EndOfYear(List.Max(List.Transform(Read("Payroll")[Payroll_Month],each Date.FromText(_ & "-01")))),
+				    Dates=Table.FromList(List.Dates(Start,Duration.Days(End-Start)+1,#duration(1,0,0,0)),Splitter.SplitByNothing(),{"Date"}),
+				    Typed=Table.TransformColumnTypes(Dates,{{"Date",type date}}),
+				    Year=Table.AddColumn(Typed,"Year",each Date.Year([Date]),Int64.Type),
+				    Quarter=Table.AddColumn(Year,"Quarter",each "Q" & Text.From(Date.QuarterOfYear([Date])),type text),
+				    MonthNumber=Table.AddColumn(Quarter,"Month Number",each Date.Month([Date]),Int64.Type),
+				    Month=Table.AddColumn(MonthNumber,"Month",each Date.ToText([Date],"MMM","en-US"),type text),
+				    YearMonth=Table.AddColumn(Month,"Year Month",each Date.ToText([Date],"yyyy-MM","en-US"),type text),
+				    Sort=Table.AddColumn(YearMonth,"Year Month Sort",each [Year]*100+[Month Number],Int64.Type),
+				    Day=Table.AddColumn(Sort,"Day",each Date.Day([Date]),Int64.Type)
+				in Day
+

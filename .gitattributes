@@ -1,0 +1,7 @@
+* text=auto
+*.tmdl text eol=lf
+*.pq text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.png binary
+*.jpg binary

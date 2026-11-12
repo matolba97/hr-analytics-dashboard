@@ -1,0 +1,32 @@
+let
+    Read = (file as text) as table => let
+    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+in Clean,
+    Source=Read("Employees"),
+    Typed=Table.TransformColumnTypes(Source,{{"Employee_ID",type text},{"First_Name",type text},{"Last_Name",type text},{"Gender",type text},{"Date_of_Birth",type date},{"Hire_Date",type date},{"Department_ID",type text},{"Job_ID",type text},{"Manager_ID",type text},{"Salary",Currency.Type},{"Bonus",Currency.Type},{"Employment_Status",type text},{"Employment_Type",type text},{"Education",type text},{"Experience_Years",Int64.Type},{"Country",type text},{"City",type text}},"en-US"),
+    Exits=Table.TransformColumnTypes(Read("Exit"),{{"Exit_Date",type date}},"en-US"),
+    ExitDates=Table.Group(Exits,{"Employee_ID"},{{"Exit Date",each List.Min([Exit_Date]),type nullable date}}),
+    ExitJoin=Table.NestedJoin(Typed,{"Employee_ID"},ExitDates,{"Employee_ID"},"Exit",JoinKind.LeftOuter),
+    ExpandedExit=Table.ExpandTableColumn(ExitJoin,"Exit",{"Exit Date"}),
+    Jobs=Table.TransformColumnTypes(Read("Jobs"),{{"Minimum_Salary",Currency.Type},{"Maximum_Salary",Currency.Type}},"en-US"),
+    JobJoin=Table.NestedJoin(ExpandedExit,{"Job_ID"},Jobs,{"Job_ID"},"Job",JoinKind.LeftOuter),
+    JobExpand=Table.ExpandTableColumn(JobJoin,"Job",{"Job_Title","Grade","Minimum_Salary","Maximum_Salary"},{"Job Title","Grade","Minimum Salary","Maximum Salary"}),
+    Departments=Read("Departments"),
+    DeptJoin=Table.NestedJoin(JobExpand,{"Department_ID"},Departments,{"Department_ID"},"Dept",JoinKind.LeftOuter),
+    DeptExpand=Table.ExpandTableColumn(DeptJoin,"Dept",{"Department_Name"},{"Department"}),
+    Names=Table.AddColumn(Typed,"Manager Name",each [First_Name] & " " & [Last_Name],type text),
+    ManagerJoin=Table.NestedJoin(DeptExpand,{"Manager_ID"},Names,{"Employee_ID"},"Mgr",JoinKind.LeftOuter),
+    ManagerExpand=Table.ExpandTableColumn(ManagerJoin,"Mgr",{"Manager Name"}),
+    EmployeeKey=Table.AddColumn(ManagerExpand,"Employee Key",each Number.FromText(Text.Select([Employee_ID],{"0".."9"})),Int64.Type),
+    DepartmentKey=Table.AddColumn(EmployeeKey,"Department Key",each Number.FromText(Text.Select([Department_ID],{"0".."9"})),Int64.Type),
+    Name=Table.AddColumn(DepartmentKey,"Employee Name",each [First_Name] & " " & [Last_Name],type text),
+    Cutoff=Date.EndOfMonth(List.Max(List.Transform(Read("Payroll")[Payroll_Month],each Date.FromText(_ & "-01")))),
+    Tenure=Table.AddColumn(Name,"Tenure Years",each Duration.Days((if [Exit Date]=null then Cutoff else [Exit Date])-[Hire_Date])/365.25,Currency.Type),
+    TenureBand=Table.AddColumn(Tenure,"Tenure Band",each if [Tenure Years]<1 then "Under 1 year" else if [Tenure Years]<3 then "1–2 years" else if [Tenure Years]<5 then "3–4 years" else "5+ years",type text),
+    TenureSort=Table.AddColumn(TenureBand,"Tenure Band Sort",each if [Tenure Years]<1 then 1 else if [Tenure Years]<3 then 2 else if [Tenure Years]<5 then 3 else 4,Int64.Type),
+    Age=Table.AddColumn(TenureSort,"Age Band",each let a=Number.RoundDown(Duration.Days(Cutoff-[Date_of_Birth])/365.25) in if a<30 then "Under 30" else if a<40 then "30–39" else if a<50 then "40–49" else "50+",type text),
+    Renamed=Table.RenameColumns(Age,{{"Employee_ID","Employee ID"},{"Hire_Date","Hire Date"},{"Employment_Status","Employment Status"},{"Employment_Type","Employment Type"},{"Experience_Years","Experience Years"},{"Salary","Annual Salary"},{"Bonus","Employee Bonus"}}),
+    Result=Table.SelectColumns(Renamed,{"Employee Key","Employee ID","Employee Name","Department Key","Department","Job Title","Grade","Manager Name","Hire Date","Exit Date","Gender","Country","City","Employment Status","Employment Type","Education","Experience Years","Annual Salary","Employee Bonus","Minimum Salary","Maximum Salary","Tenure Years","Tenure Band","Tenure Band Sort","Age Band"})
+in Result

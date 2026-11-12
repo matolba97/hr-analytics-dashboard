@@ -1,0 +1,86 @@
+/// Fact: one leave request, identified by Leave ID. Employee Key relates to Dim_Employee; Start Date actively and End Date inactively relate to Dim_Date. Total Days is full requested span; Approval Status is an extract snapshot, not a dated decision event.
+table Fact_Leave
+	lineageTag: 28f1de5e-72c9-4587-bbf3-7325940e40f6
+
+	/// Leave ID, sourced or reproducibly derived from the HR extract.
+	column 'Leave ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 1ba6bbd7-49e0-400f-b0a5-5c0e2eaa10db
+		summarizeBy: none
+		sourceColumn: Leave ID
+
+	/// Employee ID, sourced or reproducibly derived from the HR extract.
+	column 'Employee ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 5ba28924-9ae9-48b9-8028-df739b4549fc
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+	/// Leave Type, sourced or reproducibly derived from the HR extract.
+	column 'Leave Type'
+		dataType: string
+		lineageTag: 39805e89-0fe5-4e59-9801-b943001dee5c
+		summarizeBy: none
+		sourceColumn: Leave Type
+
+	/// Start Date, sourced or reproducibly derived from the HR extract.
+	column 'Start Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: c0513636-8cc7-476a-abf1-58379823be87
+		summarizeBy: none
+		sourceColumn: Start Date
+
+	/// End Date, sourced or reproducibly derived from the HR extract.
+	column 'End Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 182c739f-3aa8-4876-9bb9-2d225ba861df
+		summarizeBy: none
+		sourceColumn: End Date
+
+	/// Total Days, sourced or reproducibly derived from the HR extract.
+	column 'Total Days'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 935dddbd-7aa4-4910-b72e-58b8028a7c26
+		summarizeBy: none
+		sourceColumn: Total Days
+
+	/// Approval Status, sourced or reproducibly derived from the HR extract.
+	column 'Approval Status'
+		dataType: string
+		lineageTag: 8f7f000a-59c5-4184-878c-2d9598d61648
+		summarizeBy: none
+		sourceColumn: Approval Status
+
+	/// Employee Key, sourced or reproducibly derived from the HR extract.
+	column 'Employee Key'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: f819557a-a330-480a-8767-b49dd3538a54
+		summarizeBy: none
+		sourceColumn: Employee Key
+
+	partition Leave = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Source=Read("Leave"),
+				    Typed=Table.TransformColumnTypes(Source,{{"Leave_ID",type text},{"Employee_ID",type text},{"Leave_Type",type text},{"Start_Date",type date},{"End_Date",type date},{"Total_Days",Int64.Type},{"Approval_Status",type text}},"en-US"),
+				    Key=Table.AddColumn(Typed,"Employee Key",each Number.FromText(Text.Select([Employee_ID],{"0".."9"})),Int64.Type),
+				    Renamed=Table.RenameColumns(Key,{{"Leave_ID","Leave ID"},{"Employee_ID","Employee ID"},{"Leave_Type","Leave Type"},{"Start_Date","Start Date"},{"End_Date","End Date"},{"Total_Days","Total Days"},{"Approval_Status","Approval Status"}}),
+				    Result=Table.SelectColumns(Renamed,{"Leave ID","Employee ID","Leave Type","Start Date","End Date","Total Days","Approval Status","Employee Key"})
+				in Result
+

@@ -1,0 +1,103 @@
+/// Fact: one employee training enrollment, identified by Training ID. Employee Key relates to Dim_Employee; Start Date actively and planned End Date inactively relate to Dim_Date. Certification Status is a current snapshot; planned end is not a dated completion event. Costs use unspecified source monetary units.
+table Fact_Training
+	lineageTag: 484f197a-3442-49c7-9abf-5171c0a03ea5
+
+	/// Training ID, sourced or reproducibly derived from the HR extract.
+	column 'Training ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: c0e1be7f-7697-4f98-8c0b-094a3be7bf9e
+		summarizeBy: none
+		sourceColumn: Training ID
+
+	/// Employee ID, sourced or reproducibly derived from the HR extract.
+	column 'Employee ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 10d519d9-350b-4a84-bec1-fb2059daea71
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+	/// Training Name, sourced or reproducibly derived from the HR extract.
+	column 'Training Name'
+		dataType: string
+		lineageTag: ee8c2b47-3250-4baf-91d1-0dfbb96f1617
+		summarizeBy: none
+		sourceColumn: Training Name
+
+	/// Provider, sourced or reproducibly derived from the HR extract.
+	column Provider
+		dataType: string
+		lineageTag: be362102-ea5c-4514-9a46-36be39662013
+		summarizeBy: none
+		sourceColumn: Provider
+
+	/// Start Date, sourced or reproducibly derived from the HR extract.
+	column 'Start Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 66f2687b-12db-433a-a0e6-fec4c8e8c4a8
+		summarizeBy: none
+		sourceColumn: Start Date
+
+	/// End Date, sourced or reproducibly derived from the HR extract.
+	column 'End Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 71fe630f-0cfe-4079-83f0-a833718d91cb
+		summarizeBy: none
+		sourceColumn: End Date
+
+	/// Training Cost, sourced or reproducibly derived from the HR extract.
+	column 'Training Cost'
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 1aacee47-81f0-4c88-a041-d9e1bb31105b
+		summarizeBy: none
+		sourceColumn: Training Cost
+
+	/// Certification Status, sourced or reproducibly derived from the HR extract.
+	column 'Certification Status'
+		dataType: string
+		lineageTag: d53c78b8-95c3-4db5-884d-d82c56b4a1dd
+		summarizeBy: none
+		sourceColumn: Certification Status
+
+	/// Employee Key, sourced or reproducibly derived from the HR extract.
+	column 'Employee Key'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 3037ee6b-c91b-4969-9438-c5d1dde3ef4a
+		summarizeBy: none
+		sourceColumn: Employee Key
+
+	/// Training Days, sourced or reproducibly derived from the HR extract.
+	column 'Training Days'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: b8f97ddc-5442-4bec-ba4a-bb50ec232f2a
+		summarizeBy: none
+		sourceColumn: Training Days
+
+	partition Training = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Source=Read("Training"),
+				    Typed=Table.TransformColumnTypes(Source,{{"Training_ID",type text},{"Employee_ID",type text},{"Training_Name",type text},{"Provider",type text},{"Start_Date",type date},{"End_Date",type date},{"Training_Cost",Currency.Type},{"Certification_Status",type text}},"en-US"),
+				    Key=Table.AddColumn(Typed,"Employee Key",each Number.FromText(Text.Select([Employee_ID],{"0".."9"})),Int64.Type),
+				    Duration=Table.AddColumn(Key,"Training Days",each Duration.Days([End_Date]-[Start_Date])+1,Int64.Type),
+				    Renamed=Table.RenameColumns(Duration,{{"Training_ID","Training ID"},{"Employee_ID","Employee ID"},{"Training_Name","Training Name"},{"Start_Date","Start Date"},{"End_Date","End Date"},{"Training_Cost","Training Cost"},{"Certification_Status","Certification Status"}}),
+				    Result=Table.SelectColumns(Renamed,{"Training ID","Employee ID","Training Name","Provider","Start Date","End Date","Training Cost","Certification Status","Employee Key" ,"Training Days"})
+				in Result
+

@@ -1,0 +1,61 @@
+/// Dimension: one row per department. Unique Department Key identifies each department. Filters Dim_Employee and Fact_Recruitment through preserved one-to-many single-direction relationships. Department budget has no defined period/currency and is not a payroll target.
+table Dim_Department
+	lineageTag: 5b96aab1-e29e-40ff-9540-19683bb36be4
+
+	/// Department Key, sourced or reproducibly derived from the HR extract.
+	column 'Department Key'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 7fd644af-61c5-4b96-9ec7-fbc0381cd8f8
+		summarizeBy: none
+		sourceColumn: Department Key
+
+	/// Department, sourced or reproducibly derived from the HR extract.
+	column Department
+		dataType: string
+		lineageTag: 6948b89c-3fad-4a54-8d8e-018ecb84196d
+		summarizeBy: none
+		sourceColumn: Department
+
+	/// Location, sourced or reproducibly derived from the HR extract.
+	column Location
+		dataType: string
+		lineageTag: a573d0ee-f944-4b2f-8b87-5eb9624e0b4b
+		summarizeBy: none
+		sourceColumn: Location
+
+	/// Budget, sourced or reproducibly derived from the HR extract.
+	column Budget
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 4df4b5ad-ba06-479f-b1f6-19e04f422f51
+		summarizeBy: none
+		sourceColumn: Budget
+
+	/// Department Head ID, sourced or reproducibly derived from the HR extract.
+	column 'Department Head ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 2e56d08c-d26f-4878-897c-28a2a8d468fe
+		summarizeBy: none
+		sourceColumn: Department Head ID
+
+	partition Department = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Source=Read("Departments"),
+				    Typed=Table.TransformColumnTypes(Source,{{"Department_ID",type text},{"Department_Name",type text},{"Location",type text},{"Budget",Currency.Type},{"Head_Employee_ID",type text}},"en-US"),
+				    Key=Table.AddColumn(Typed,"Department Key",each Number.FromText(Text.Select([Department_ID],{"0".."9"})),Int64.Type),
+				    Renamed=Table.RenameColumns(Key,{{"Department_Name","Department"},{"Head_Employee_ID","Department Head ID"}}),
+				    Result=Table.SelectColumns(Renamed,{"Department Key","Department","Location","Budget","Department Head ID"})
+				in Result
+

@@ -1,0 +1,87 @@
+/// Fact: one recorded employee-date attendance observation, identified by Attendance ID; Employee Key relates to Dim_Employee and Attendance Date actively relates to Dim_Date. Sparse observations do not define a scheduled-work denominator. Regular and overtime hours are separate components.
+table Fact_Attendance
+	lineageTag: dbccd171-fce4-4dcd-a280-616ad53fae97
+
+	/// Attendance ID, sourced or reproducibly derived from the HR extract.
+	column 'Attendance ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 958870ad-2f94-4aff-bca1-3644185858d4
+		summarizeBy: none
+		sourceColumn: Attendance ID
+
+	/// Employee ID, sourced or reproducibly derived from the HR extract.
+	column 'Employee ID'
+		dataType: string
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 87ae14f4-caae-4bcc-8343-fa96c9b66b62
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+	/// Attendance Date, sourced or reproducibly derived from the HR extract.
+	column 'Attendance Date'
+		dataType: dateTime
+		formatString: dd MMM yyyy
+		lineageTag: 64170fcd-a0c9-4c3f-8b52-d5ab7917fff4
+		summarizeBy: none
+		sourceColumn: Attendance Date
+
+	/// Working Hours, sourced or reproducibly derived from the HR extract.
+	column 'Working Hours'
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 19c00a05-fc20-4944-8067-7e6d1c0cc262
+		summarizeBy: none
+		sourceColumn: Working Hours
+
+	/// Overtime Hours, sourced or reproducibly derived from the HR extract.
+	column 'Overtime Hours'
+		dataType: decimal
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 7d61285e-435b-4667-bddc-6172e098e4bf
+		summarizeBy: none
+		sourceColumn: Overtime Hours
+
+	/// Attendance Status, sourced or reproducibly derived from the HR extract.
+	column 'Attendance Status'
+		dataType: string
+		lineageTag: 38415d28-b7e2-4f31-9dc8-efde0826994f
+		summarizeBy: none
+		sourceColumn: Attendance Status
+
+	/// Shift, sourced or reproducibly derived from the HR extract.
+	column Shift
+		dataType: string
+		lineageTag: eb1bdad3-3b7c-4526-b18a-cc09c081d64f
+		summarizeBy: none
+		sourceColumn: Shift
+
+	/// Employee Key, sourced or reproducibly derived from the HR extract.
+	column 'Employee Key'
+		dataType: int64
+		isHidden
+		isAvailableInMdx: false
+		lineageTag: 82589508-21ac-44ca-8565-be07e925eaf4
+		summarizeBy: none
+		sourceColumn: Employee Key
+
+	partition Attendance = m
+		mode: import
+		source =
+				let
+				    Read = (file as text) as table => let
+				    Raw = Csv.Document(File.Contents(DatasetRoot & "\" & file & ".csv"),[Delimiter=",",Encoding=65001,QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Raw,[PromoteAllScalars=true]),
+				    Clean = Table.TransformColumns(Headers,List.Transform(Table.ColumnNames(Headers),(c)=>{c,(v)=>if v=null or Text.Trim(Text.From(v))="" then null else Text.Trim(Text.From(v)),type nullable text}))
+				in Clean,
+				    Source=Read("Attendance"),
+				    Typed=Table.TransformColumnTypes(Source,{{"Attendance_ID",type text},{"Employee_ID",type text},{"Attendance_Date",type date},{"Working_Hours",Currency.Type},{"Overtime_Hours",Currency.Type},{"Attendance_Status",type text},{"Shift",type text}},"en-US"),
+				    Key=Table.AddColumn(Typed,"Employee Key",each Number.FromText(Text.Select([Employee_ID],{"0".."9"})),Int64.Type),
+				    Renamed=Table.RenameColumns(Key,{{"Attendance_ID","Attendance ID"},{"Employee_ID","Employee ID"},{"Attendance_Date","Attendance Date"},{"Working_Hours","Working Hours"},{"Overtime_Hours","Overtime Hours"},{"Attendance_Status","Attendance Status"}}),
+				    Result=Table.SelectColumns(Renamed,{"Attendance ID","Employee ID","Attendance Date","Working Hours","Overtime Hours","Attendance Status","Shift","Employee Key"})
+				in Result
+

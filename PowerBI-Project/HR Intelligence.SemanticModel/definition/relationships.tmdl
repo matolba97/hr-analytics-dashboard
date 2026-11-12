@@ -1,0 +1,85 @@
+relationship 'Employee to Department - Department Key'
+	fromColumn: Dim_Employee.'Department Key'
+	toColumn: Dim_Department.'Department Key'
+
+relationship 'Attendance to Employee - Employee Key'
+	fromColumn: Fact_Attendance.'Employee Key'
+	toColumn: Dim_Employee.'Employee Key'
+
+relationship 'Attendance to Date - Attendance Date'
+	fromColumn: Fact_Attendance.'Attendance Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Leave to Employee - Employee Key'
+	fromColumn: Fact_Leave.'Employee Key'
+	toColumn: Dim_Employee.'Employee Key'
+
+relationship 'Leave to Date - Start Date'
+	fromColumn: Fact_Leave.'Start Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Leave to Date - End Date'
+	isActive: false
+	fromColumn: Fact_Leave.'End Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Payroll to Employee - Employee Key'
+	fromColumn: Fact_Payroll.'Employee Key'
+	toColumn: Dim_Employee.'Employee Key'
+
+relationship 'Payroll to Date - Payroll Period'
+	fromColumn: Fact_Payroll.'Payroll Period'
+	toColumn: Dim_Date.Date
+
+relationship 'Payroll to Date - Payment Date'
+	isActive: false
+	fromColumn: Fact_Payroll.'Payment Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Performance to Employee - Employee Key'
+	fromColumn: Fact_Performance.'Employee Key'
+	toColumn: Dim_Employee.'Employee Key'
+
+relationship 'Performance to Date - Review Date'
+	fromColumn: Fact_Performance.'Review Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Recruitment to Department - Department Key'
+	fromColumn: Fact_Recruitment.'Department Key'
+	toColumn: Dim_Department.'Department Key'
+
+relationship 'Recruitment to Date - Application Date'
+	fromColumn: Fact_Recruitment.'Application Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Recruitment to Date - Joining Date'
+	isActive: false
+	fromColumn: Fact_Recruitment.'Joining Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Recruitment to Date - Interview Date'
+	isActive: false
+	fromColumn: Fact_Recruitment.'Interview Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Training to Employee - Employee Key'
+	fromColumn: Fact_Training.'Employee Key'
+	toColumn: Dim_Employee.'Employee Key'
+
+relationship 'Training to Date - Start Date'
+	fromColumn: Fact_Training.'Start Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Training to Date - End Date'
+	isActive: false
+	fromColumn: Fact_Training.'End Date'
+	toColumn: Dim_Date.Date
+
+relationship 'Exit to Employee - Employee Key'
+	fromColumn: Fact_Exit.'Employee Key'
+	toColumn: Dim_Employee.'Employee Key'
+
+relationship 'Exit to Date - Exit Date'
+	fromColumn: Fact_Exit.'Exit Date'
+	toColumn: Dim_Date.Date
+

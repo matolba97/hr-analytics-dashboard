@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "HR Intelligence"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f4b46158-5b05-454e-a965-62eb642663fe"
+  }
+}

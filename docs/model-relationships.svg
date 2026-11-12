@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="850" viewBox="0 0 1320 850">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#7D8BAF" /></marker></defs>
+<rect width="1320" height="850" fill="#F7F8FC" />
+<text x="40" y="54" font-family="Segoe UI" font-size="30" font-weight="600" fill="#202638">HR Intelligence · semantic relationships</text>
+<rect x="40" y="135" width="270" height="90" rx="12" fill="#E9EDFC" stroke="#CBD3E6" />
+<text x="60" y="170" font-family="Segoe UI" font-size="23" fill="#243C84">Dim_Department</text>
+<text x="60" y="199" font-family="Segoe UI" font-size="16" fill="#586174">12 current departments</text>
+<rect x="390" y="135" width="300" height="90" rx="12" fill="#E9EDFC" stroke="#CBD3E6" />
+<text x="410" y="170" font-family="Segoe UI" font-size="23" fill="#243C84">Dim_Employee</text>
+<text x="410" y="199" font-family="Segoe UI" font-size="16" fill="#586174">3,000 employee master records</text>
+<rect x="880" y="135" width="320" height="90" rx="12" fill="#E9EDFC" stroke="#CBD3E6" />
+<text x="900" y="170" font-family="Segoe UI" font-size="23" fill="#243C84">Dim_Date</text>
+<text x="900" y="199" font-family="Segoe UI" font-size="16" fill="#586174">Contiguous daily calendar</text>
+<path d="M310 180 L390 180" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="40" y="370" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="60" y="405" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Attendance</text>
+<text x="60" y="434" font-family="Segoe UI" font-size="16" fill="#586174">Employee × recorded day</text>
+<path d="M1040 225 L260 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M540 225 L110 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="360" y="370" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="380" y="405" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Payroll</text>
+<text x="380" y="434" font-family="Segoe UI" font-size="16" fill="#586174">Employee × payroll month</text>
+<path d="M1040 225 L580 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M540 225 L430 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="680" y="370" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="700" y="405" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Leave</text>
+<text x="700" y="434" font-family="Segoe UI" font-size="16" fill="#586174">One leave request</text>
+<path d="M1040 225 L900 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M540 225 L750 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="1000" y="370" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="1020" y="405" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Performance</text>
+<text x="1020" y="434" font-family="Segoe UI" font-size="16" fill="#586174">One review record</text>
+<path d="M1040 225 L1220 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M540 225 L1070 370" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="40" y="555" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="60" y="590" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Training</text>
+<text x="60" y="619" font-family="Segoe UI" font-size="16" fill="#586174">One enrollment</text>
+<path d="M1040 225 L260 555" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M540 225 L110 555" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="360" y="555" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="380" y="590" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Exit</text>
+<text x="380" y="619" font-family="Segoe UI" font-size="16" fill="#586174">One employment exit</text>
+<path d="M1040 225 L580 555" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M540 225 L430 555" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="680" y="555" width="292" height="96" rx="12" fill="#FFFFFF" stroke="#CBD3E6" />
+<text x="700" y="590" font-family="Segoe UI" font-size="23" fill="#243C84">Fact_Recruitment</text>
+<text x="700" y="619" font-family="Segoe UI" font-size="16" fill="#586174">One application</text>
+<path d="M1040 225 L900 555" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<path d="M175 225 L750 555" stroke="#7D8BAF" fill="none" stroke-width="2" marker-end="url(#a)" />
+<rect x="1000" y="555" width="280" height="96" rx="12" fill="#E9EDFC" stroke="#CBD3E6" />
+<text x="1020" y="590" font-family="Segoe UI" font-size="23" fill="#243C84">Measures_HR</text>
+<text x="1020" y="619" font-family="Segoe UI" font-size="16" fill="#586174">120 explicit measures</text>
+<text x="40" y="785" font-family="Segoe UI" font-size="18" fill="#586174">Arrows: one → many, single-direction filtering. Dim_Date does not filter Dim_Employee directly.</text>
+<text x="40" y="815" font-family="Segoe UI" font-size="18" fill="#586174">Five alternate date relationships remain inactive; event measures activate the intended date role.</text>
+</svg>

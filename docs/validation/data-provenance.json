@@ -1,0 +1,99 @@
+{
+  "source_repository": "vikashGiri27/HR-Analytics-end-to-end-project",
+  "source_commit": "197d1081a261e0167a1002588de142ba5d6f44fd",
+  "license": null,
+  "verification_date": "2026-11-12",
+  "all_ten_csvs_byte_identical": true,
+  "files": [
+    {
+      "file": "Attendance.csv",
+      "upstream_path": "Database/Attendance.csv",
+      "git_blob_sha": "7ccccfb5db3e84437e73039b0fa2d72afa72b66f",
+      "upstream_blob_sha": "7ccccfb5db3e84437e73039b0fa2d72afa72b66f",
+      "matches": true,
+      "sha256": "37f001a903c434918d1ff3322ae699e58126dbab1313ed5af30e37418c610af4",
+      "bytes": 42434796
+    },
+    {
+      "file": "Departments.csv",
+      "upstream_path": "Database/Departments.csv",
+      "git_blob_sha": "343fa125d00aa86ca859f4f04bccad640a3db85e",
+      "upstream_blob_sha": "343fa125d00aa86ca859f4f04bccad640a3db85e",
+      "matches": true,
+      "sha256": "4035f0213971b037f3fc103cc0391d40b04a6ad59209c074b5aa5c0e12db3615",
+      "bytes": 665
+    },
+    {
+      "file": "Employees.csv",
+      "upstream_path": "Database/Employees.csv",
+      "git_blob_sha": "82756f87d966154033ac1ea6209b2bf204d8b637",
+      "upstream_blob_sha": "82756f87d966154033ac1ea6209b2bf204d8b637",
+      "matches": true,
+      "sha256": "8857668aa7d9455e850a8d14e20c5d75868c2b922a37c0a0e8e1c257cab4dfb5",
+      "bytes": 595007
+    },
+    {
+      "file": "Exit.csv",
+      "upstream_path": "Database/Exit.csv",
+      "git_blob_sha": "cdd3e0dc4a7d562b48251a624340d96439c1232f",
+      "upstream_blob_sha": "cdd3e0dc4a7d562b48251a624340d96439c1232f",
+      "matches": true,
+      "sha256": "0cff381b8d62db086e36ce238871b84d4cc9f29a50526c05aed917e1a0cae59f",
+      "bytes": 59336
+    },
+    {
+      "file": "Jobs.csv",
+      "upstream_path": "Database/Jobs.csv",
+      "git_blob_sha": "11823255f452df19431516570e3683a928e03fdd",
+      "upstream_blob_sha": "11823255f452df19431516570e3683a928e03fdd",
+      "matches": true,
+      "sha256": "534f7566f010d7249188b209a5d41d9a66a9a18522e36a064f059dde1e61bafa",
+      "bytes": 2002
+    },
+    {
+      "file": "Leave.csv",
+      "upstream_path": "Database/Leave.csv",
+      "git_blob_sha": "c586bb9f076b439f118b9e5053c8d865c7d5e4c1",
+      "upstream_blob_sha": "c586bb9f076b439f118b9e5053c8d865c7d5e4c1",
+      "matches": true,
+      "sha256": "dc06fb719e5da841c624ba182d3a2413d05ebab7a43993f8a20912b4bed6c91b",
+      "bytes": 1062236
+    },
+    {
+      "file": "Payroll.csv",
+      "upstream_path": "Database/Payroll.csv",
+      "git_blob_sha": "e473f3195bdab39d63ee700b629d72db4cbe25d9",
+      "upstream_blob_sha": "e473f3195bdab39d63ee700b629d72db4cbe25d9",
+      "matches": true,
+      "sha256": "1a90a0a7cc0adf6cdd74106ffd4c142ed5d7e2d6888bbc75d2ea2c62019cf7a3",
+      "bytes": 5335255
+    },
+    {
+      "file": "Performance.csv",
+      "upstream_path": "Database/Performance.csv",
+      "git_blob_sha": "710ebc7fae191e716659a019ecf834796e75cf89",
+      "upstream_blob_sha": "710ebc7fae191e716659a019ecf834796e75cf89",
+      "matches": true,
+      "sha256": "6259f9bb07555dcbbf01f1a06a93c67fa489a022f8a808c319d818c73baaa650",
+      "bytes": 615608
+    },
+    {
+      "file": "Recruitment.csv",
+      "upstream_path": "Database/Recruitment.csv",
+      "git_blob_sha": "6d339e730f317dd97772894211c3da0d707a8efa",
+      "upstream_blob_sha": "6d339e730f317dd97772894211c3da0d707a8efa",
+      "matches": true,
+      "sha256": "8e9b7c8f9488f5ef535e7fa5c5c970e4976dd878b7dc0790a5d3b2b5b7a68f06",
+      "bytes": 872605
+    },
+    {
+      "file": "Training.csv",
+      "upstream_path": "Database/Training.csv",
+      "git_blob_sha": "cff0391cc1b1cace3816e1755894252071040590",
+      "upstream_blob_sha": "cff0391cc1b1cace3816e1755894252071040590",
+      "matches": true,
+      "sha256": "728acb2b219eabd188db44a397a43741f14beac34448a7fc395cbf6573108e37",
+      "bytes": 598873
+    }
+  ]
+}

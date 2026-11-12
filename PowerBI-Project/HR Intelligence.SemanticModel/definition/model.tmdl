@@ -1,0 +1,29 @@
+model 'HR Enterprise'
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+annotation PBI_QueryOrder = ["Department","Employee","Attendance","Leave","Payroll","Performance","Recruitment","Training","Exit","Date","HR Metrics","DatasetRoot"]
+
+ref table Dim_Department
+ref table Dim_Employee
+ref table Fact_Attendance
+ref table Fact_Leave
+ref table Fact_Payroll
+ref table Fact_Performance
+ref table Fact_Recruitment
+ref table Fact_Training
+ref table Fact_Exit
+ref table Dim_Date
+ref table Measures_HR
+
+ref cultureInfo en-US
+

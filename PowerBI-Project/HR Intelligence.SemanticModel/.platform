@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "HR Intelligence"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "84b8a366-75c8-504b-9c07-c6d3bbbfdb80"
+  }
+}

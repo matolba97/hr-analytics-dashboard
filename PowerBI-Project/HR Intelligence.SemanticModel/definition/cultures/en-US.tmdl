@@ -1,0 +1,581 @@
+cultureInfo en-US
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "hr_metrics.gross_payroll": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Gross Payroll"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.active_headcount_as_of_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Active Headcount As Of Date"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.recorded_attendance_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Recorded Attendance Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.recorded_absence_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Recorded Absence Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.on_hold_applications": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "On Hold Applications"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.hired_missing_joining_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Hired Missing Joining Date"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.average_daily_headcount": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Average Daily Headcount"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.average_performance_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Average Performance Score"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.average_kpi_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Average KPI Score"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.average_productivity_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Average Productivity Score"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.average_attendance_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Average Attendance Score"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.average_teamwork_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Average Teamwork Score"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.training_completion_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Training Completion Rate"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.training_enrollments": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Training Enrollments"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.training_cost": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Training Cost"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.training_participants": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Training Participants"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.department_headcount_rank": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Department Headcount Rank"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.pending_leave_requests": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Pending Leave Requests"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "hr_metrics.pending_requested_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "HR Metrics",
+			          "ConceptualProperty": "Pending Requested Days"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "measures_hr.gross_payroll": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Gross Payroll"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Gross payroll": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.active_headcount_as_of_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Active Headcount As Of Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Employed": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.recorded_attendance_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Recorded Attendance Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Attendance rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.recorded_absence_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Recorded Absence Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Absence rate": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.on_hold_applications": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "On Hold Applications"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "On hold": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.hired_missing_joining_date": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Hired Missing Joining Date"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Missing join date": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.average_daily_headcount": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Average Daily Headcount"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Daily average": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.average_performance_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Average Performance Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Review score": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.average_kpi_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Average KPI Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "KPI": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.average_productivity_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Average Productivity Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Productivity": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.average_attendance_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Average Attendance Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Attendance": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.average_teamwork_score": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Average Teamwork Score"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Teamwork": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.training_completion_rate": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Training Completion Rate"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Completion": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.training_enrollments": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Training Enrollments"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Enrollments": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.training_cost": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Training Cost"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Cost": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.training_participants": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Training Participants"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Participants": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.department_headcount_rank": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Department Headcount Rank"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Rank": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.pending_leave_requests": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Pending Leave Requests"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pending requests": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "measures_hr.pending_requested_days": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Measures_HR",
+			          "ConceptualProperty": "Pending Requested Days"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Pending days": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+
