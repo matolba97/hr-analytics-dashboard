@@ -127,7 +127,7 @@ hr-analytics-dashboard/
 └── DATA_MODEL_DICTIONARY.md
 ```
 
-![Semantic model relationships](docs/model-relationships.svg)
+![Semantic model relationships](docs/screenshots/hr-semantic-data-model.png)
 
 ## Installation and setup
 
