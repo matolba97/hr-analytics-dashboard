@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-12",
+  "anonymous": true,
+  "overview": {
+    "employed": 2071,
+    "hires": 365,
+    "exits": 242,
+    "attrition": "11.8%",
+    "grossPayroll": "115.40M"
+  },
+  "finance": {
+    "employed": 188,
+    "hires": 29,
+    "exits": 19,
+    "attrition": "10.3%",
+    "grossPayroll": "12.46M"
+  },
+  "departmentSyncToWorkforce": true,
+  "pages": [
+    {
+      "page": "Executive Command Center",
+      "rendered": true
+    },
+    {
+      "page": "Workforce Intelligence",
+      "rendered": true
+    },
+    {
+      "page": "Attendance & Workforce Utilization",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "Payroll & Compensation",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "Recruitment & Hiring Intelligence",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "Attrition & Retention",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "Performance Intelligence",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "Training & Development",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "Department Deep Dive",
+      "rendered": true,
+      "visualErrors": false
+    },
+    {
+      "page": "HR Operations & Exceptions",
+      "rendered": true,
+      "visualErrors": false
+    }
+  ],
+  "scope": "Navigation and sampled displayed values; not an authenticated full Service model export."
+}

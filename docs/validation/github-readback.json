@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-12",
+  "owner": "matolba97",
+  "public": true,
+  "repository_url": "https://github.com/matolba97/hr-analytics-dashboard",
+  "homepage": "https://app.powerbi.com/view?r=eyJrIjoiMzZhYTVhNWUtNWEwYi00ZTVkLThjOTQtMzRmOTViMWU2MGVlIiwidCI6IjJiYjZlNWJjLWMxMDktNDdmYi05NDMzLWMxYzZmNGZhMzNmZiIsImMiOjl9",
+  "topics": [
+    "data-analytics",
+    "dax",
+    "hr-analytics",
+    "pbip",
+    "portfolio",
+    "power-bi",
+    "power-query",
+    "tmdl",
+    "workforce-analytics"
+  ],
+  "screenshots": [
+    {
+      "file": "attendance.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "attrition.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "department.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "executive-overview.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "live-finance.jpg",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "operations.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "payroll.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "performance.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "recruitment.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "training.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    },
+    {
+      "file": "workforce.png",
+      "http_status": 200,
+      "matches_local_sha256": true
+    }
+  ],
+  "readme_embedded_images_loaded_in_browser": 6,
+  "raw_data_published": false
+}
